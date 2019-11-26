@@ -1,0 +1,1 @@
+web: gunicorn SiteAlert.main:app --log-file=-
