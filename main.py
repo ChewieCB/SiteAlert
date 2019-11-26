@@ -52,3 +52,4 @@ def send_alert(site, scenario):
 
 if __name__ == "__main__":
     get_inbox()
+    # TODO: add some sort of cron scheduling
