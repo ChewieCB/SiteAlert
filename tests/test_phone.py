@@ -1,5 +1,5 @@
 from twilio.rest import Client
-from SiteAlert import credentials
+import credentials
 
 client = Client(credentials.SID, credentials.TOKEN)
 

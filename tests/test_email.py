@@ -1,5 +1,5 @@
 import imaplib
-from SiteAlert import credentials
+import credentials
 
 
 def test_read_inbox():

@@ -5,7 +5,7 @@ import email
 from twilio.rest import Client
 from apscheduler.schedulers.blocking import BlockingScheduler
 
-from SiteAlert import credentials
+import credentials
 
 sched = BlockingScheduler()
 

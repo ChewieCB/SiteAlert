@@ -1,1 +1,1 @@
-web: gunicorn SiteAlert.main.py
+web: main.py
