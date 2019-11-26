@@ -37,7 +37,8 @@ def get_inbox():
     if unseen_scenarios:
         [send_alert("Stringer's Weir", scenario) for scenario in unseen_scenarios]
         sys.stdout.write(f"\n{len(unseen_scenarios)} alerts sent.")
-        [sys.stdout.write(f"\n\n\tSite: Stringer's Weir\n\tAlert: {scenario}") for scenario in unseen_scenarios]
+        sys.stdout.write(f"\n\tSite: Stringer's Weir")
+        [sys.stdout.write(f"\n\tAlert: {scenario}") for scenario in unseen_scenarios]
     else:
         sys.stdout.write("\nNo unseen alerts.")
 
