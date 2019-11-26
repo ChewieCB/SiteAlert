@@ -12,7 +12,7 @@ sched = BlockingScheduler()
 test_bin = ""     # TODO: add a bin for status response data when its working
 
 
-@sched.scheduled_job('interval', minutes=5)
+@sched.scheduled_job('interval', minutes=1)
 def get_inbox():
     """
 
