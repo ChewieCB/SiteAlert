@@ -5,7 +5,7 @@ import email
 from twilio.rest import Client
 from apscheduler.schedulers.blocking import BlockingScheduler
 
-import credentials
+from SiteAlert import credentials
 
 sched = BlockingScheduler()
 
@@ -36,10 +36,10 @@ def get_inbox():
 
     if unseen_scenarios:
         [send_alert("Stringer's Weir", scenario) for scenario in unseen_scenarios]
-        sys.stdout(f"\n{len(unseen_scenarios)} alerts sent.")
-        [sys.stdout(f"\n\n\tSite: Stringer's Weir\n\tAlert: {scenario}") for scenario in unseen_scenarios]
-    # else:
-    #     print("\n\tNo unseen alerts.")
+        sys.stdout.write(f"\n{len(unseen_scenarios)} alerts sent.")
+        [sys.stdout.write(f"\n\n\tSite: Stringer's Weir\n\tAlert: {scenario}") for scenario in unseen_scenarios]
+    else:
+        sys.stdout.write("\nNo unseen alerts.")
 
 
 def send_alert(site, scenario):

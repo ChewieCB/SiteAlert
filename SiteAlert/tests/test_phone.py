@@ -1,9 +1,5 @@
-import pytest
-import requests
-import json
 from twilio.rest import Client
-import credentials
-
+from SiteAlert import credentials
 
 client = Client(credentials.SID, credentials.TOKEN)
 
