@@ -1,11 +1,18 @@
+import sys
 import imaplib
 import email
+
 from twilio.rest import Client
+from apscheduler.schedulers.blocking import BlockingScheduler
+
 import credentials
+
+sched = BlockingScheduler()
 
 test_bin = ""     # TODO: add a bin for status response data when its working
 
 
+@sched.scheduled_job('interval', minutes=5)
 def get_inbox():
     """
 
@@ -29,9 +36,10 @@ def get_inbox():
 
     if unseen_scenarios:
         [send_alert("Stringer's Weir", scenario) for scenario in unseen_scenarios]
-        print(f"\n\t{len(unseen_scenarios)} alerts sent.")
-    else:
-        print("\n\tNo unseen alerts.")
+        sys.stdout(f"\n{len(unseen_scenarios)} alerts sent.")
+        [sys.stdout(f"\n\n\tSite: Stringer's Weir\n\tAlert: {scenario}") for scenario in unseen_scenarios]
+    # else:
+    #     print("\n\tNo unseen alerts.")
 
 
 def send_alert(site, scenario):
@@ -51,5 +59,4 @@ def send_alert(site, scenario):
 
 
 if __name__ == "__main__":
-    get_inbox()
-    # TODO: add some sort of cron scheduling
+    sched.start()
