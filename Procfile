@@ -1,1 +1,1 @@
-web: gunicorn SiteAlert.main:app --log-file=-
+web: gunicorn SiteAlert.main.py
