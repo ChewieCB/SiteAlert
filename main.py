@@ -1,6 +1,7 @@
 import sys
 import imaplib
 import email
+import datetime
 
 from twilio.rest import Client
 from apscheduler.schedulers.blocking import BlockingScheduler
@@ -36,10 +37,10 @@ def get_inbox():
 
     if unseen_scenarios:
         [send_alert("Stringer's Weir", scenario) for scenario in unseen_scenarios]
-        sys.stdout.write(f"\n{len(unseen_scenarios)} alerts sent.")
+        sys.stdout.write(f"\n{datetime.datetime.now()}\t:\t{len(unseen_scenarios)} alerts sent.")
         [sys.stdout.write(f"\n\n\tSite: Stringer's Weir\n\tAlert: {scenario}") for scenario in unseen_scenarios]
     else:
-        sys.stdout.write("\nNo unseen alerts.")
+        sys.stdout.write(f"\n{datetime.datetime.now()}\t:\tNo unseen alerts.")
 
 
 def send_alert(site, scenario):
