@@ -1,7 +1,15 @@
 from twilio.rest import Client
-import credentials
+import yaml
 
-client = Client(credentials.SID, credentials.TOKEN)
+# Import credentials from config file
+with open('config.yaml', 'r') as config_file:
+    config = yaml.load(config_file)
+
+twilio_credentials = config["twilio"]
+personal_numbers = config["personal numbers"]
+
+# Initialise the twilio client
+client = Client(twilio_credentials["SID"], twilio_credentials["TOKEN"])
 
 # Create a postbin for testing callbacks
 # create_bin = requests.post("https://postb.in/api/bin")
@@ -16,7 +24,7 @@ def test_initialise_client():
     :return: None.
     """
     assert client
-    assert client.auth == (credentials.SID, credentials.TOKEN)
+    assert client.auth == (twilio_credentials["SID"], twilio_credentials["TOKEN"])
 
 
 def test_send_message():
@@ -26,8 +34,8 @@ def test_send_message():
         """
     # TODO: fix status callback, getting a 404 when trying to retrieve the data from postbin
     # client.messages.create(
-    #     to=credentials.JACK_MOB,
-    #     from_=credentials.TRIAL_NUMBER,
+    #     to=credentials.personal_numbers[0],
+    #     from_=twilio_credentials["TRIAL_NUMBER"],
     #     body="AUTOMATED PYTHON-TWILIO TEST, DO NOT RESPOND.",
     #     status_callback=test_bin,
     # )
