@@ -2,10 +2,9 @@ import sys
 import imaplib
 import email
 
+import yaml
 from twilio.rest import Client
 from apscheduler.schedulers.blocking import BlockingScheduler
-
-import credentials
 
 sched = BlockingScheduler()
 
@@ -18,8 +17,10 @@ def get_inbox():
 
     :return:
     """
+    mail_credentials = config["generators gmail"]
+
     mail = imaplib.IMAP4_SSL("imap.gmail.com", 993)
-    mail.login(credentials.gen_user, credentials.gen_pass)
+    mail.login(mail_credentials["username"], mail_credentials["password"])
     mail.select('Inbox')
     stringers_type, stringers_data = mail.search(None, '(FROM "stringershydro@hallidays.com" UNSEEN)')
 
@@ -39,8 +40,8 @@ def get_inbox():
         sys.stdout.write(f"\n{len(unseen_scenarios)} alerts sent.")
         sys.stdout.write(f"\n\tSite: Stringer's Weir")
         [sys.stdout.write(f"\n\tAlert: {scenario}") for scenario in unseen_scenarios]
-    else:
-        sys.stdout.write("\nNo unseen alerts.")
+    # else:
+        # sys.stdout.write("\nNo unseen alerts.")
 
 
 def send_alert(site, scenario):
@@ -48,16 +49,24 @@ def send_alert(site, scenario):
 
     :return:
     """
+    twilio_credentials = config["twilio"]
+    personal_numbers = config["personal numbers"]
+
+    call_list = personal_numbers[0]
+
     body_message = f"\n\n{site} alert:\n{scenario}."
 
-    client = Client(credentials.SID, credentials.TOKEN)
+    client = Client(twilio_credentials["SID"], twilio_credentials["TOKEN"])
     [client.messages.create(
         to=number,
-        from_=credentials.TRIAL_NUMBER,
+        from_=twilio_credentials["TRIAL_NUMBER"],
         body=body_message,
         status_callback=test_bin,
-    ) for number in credentials.call_list]
+    ) for number in call_list]
 
 
 if __name__ == "__main__":
+
+    with open('config.yaml', 'r') as config_file:
+        config = yaml.load(config_file)
     sched.start()
