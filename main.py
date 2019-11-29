@@ -52,7 +52,7 @@ def send_alert(site, scenario):
     twilio_credentials = config["twilio"]
     personal_numbers = config["personal numbers"]
 
-    call_list = personal_numbers[0]
+    call_list = personal_numbers.values()
 
     body_message = f"\n\n{site} alert:\n{scenario}."
 
