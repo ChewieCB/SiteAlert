@@ -64,12 +64,15 @@ def get_inbox(site_emails: list):
             sys.stdout.write(f"\n\t{len(unseen_scenarios[site])} alerts sent.")
             [sys.stdout.write(f"\n\tAlert: {scenario}") for scenario in unseen_scenarios[site]]
         else:
-            sys.stdout.write("\n\tNo unseen alerts.")
+            # sys.stdout.write("\n\tNo unseen alerts.")
+            pass
 
 
 def send_alert(site, scenario):
     """
-
+    Send a text message to all users in the call list using the Twilio API.
+    :param site:
+    :param scenario:
     :return:
     """
     # Get twilio and phone credentials
@@ -91,7 +94,6 @@ def send_alert(site, scenario):
 
 
 if __name__ == "__main__":
-
     with open('config.yaml', 'r') as config_file:
         config = yaml.safe_load(config_file)
     sched.start()
