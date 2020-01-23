@@ -10,7 +10,7 @@ mail_credentials = config["generators gmail"]
 
 def test_read_inbox():
     """
-
+    Check to see if the inbox can be read and that the email type returned is correct.
     :return:
     """
     mail = imaplib.IMAP4_SSL("imap.gmail.com", 993)
